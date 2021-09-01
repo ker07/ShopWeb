@@ -1,0 +1,15 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+{% include "header.html" %}
+<h1>This is Cart</h1>
+{% for item in all_cart_item %}
+<h2>{{ item.item }}</h2>
+<h2>{{ item.quantity }}</h2>
+<a class="btn btn-primary" href="{{ url_for('edit_cart', cartitem_id=item.id) }}">Edit</a>
+<a class="btn btn-primary" href="{{ url_for('delete_item_in_cart', item_in_cart_id=item.id) }}">Delete</i></a>
+{% endfor %}
+
+
+{% include "footer.html" %}
+{% endblock %}

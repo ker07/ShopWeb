@@ -1,0 +1,40 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+{% include "header.html" %}
+<h1>This is Itemlist</h1>
+<h1>Hi {{current_user.name}}</h1>
+
+<div class="container-fluid">
+    <table>
+        <tr>
+            <td><h2>Name</h2></td>
+            <td><h2>Price</h2></td>
+            <td><h2>Stock</h2></td>
+        </tr>
+        {% for item in page.items %}
+        <tr>
+            <td><h2>{{ item.name }} </h2></td>
+            <td><h2>{{ item.price }} </h2></td>
+            <td><h2>{{ item.stock }} </h2></td>
+            <td><a class="btn btn-primary" href="{{ url_for('item', item_id=item.id) }}"><h3>Detail</h3></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class=pagination>
+    {%- for page_num in page.iter_pages(left_edge=1, left_current=2, right_current=3, right_edge=1) %}
+    {% if page_num %}
+    {% if page_num != page.page %}
+    <a href="{{ url_for('show_all_items', page=page, page_number=page_num) }}">{{ page_num }}</a>
+    {% else %}
+    <strong>{{ page_num }}</strong>
+    {% endif %}
+    {% else %}
+    <span class=ellipsis>...</span>
+    {% endif %}
+    {%- endfor %}
+</div>
+
+{% include "footer.html" %}
+{% endblock %}

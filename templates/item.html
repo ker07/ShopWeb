@@ -1,0 +1,22 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+<h1>This is {{ item.name }}</h1>
+<table>
+<tr>
+    <td><h2>Name</h2></td>
+    <td><h2>Price</h2></td>
+    <td><h2>Stock</h2></td>
+</tr>
+<tr>
+<td><h2>{{ item.name }} </h2></td>
+<td><h2>{{ item.price }} </h2></td>
+<td><h2>{{ item.stock }} </h2></td>
+</tr>
+    </table>
+{{ wtf.quick_form(form, novalidate=True) }}
+
+{% include "footer.html" %}
+{% endblock %}

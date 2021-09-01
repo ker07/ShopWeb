@@ -1,0 +1,10 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+<h1>This is add page</h1>
+{{ wtf.quick_form(form, novalidate=True) }}
+
+{% include "footer.html" %}
+{% endblock %}

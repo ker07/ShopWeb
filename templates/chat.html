@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+{% include "header.html" %}
+<!--    SocketIO-->
+<title>Chat Room for Customers</title>
+<script charset="utf-8" type="text/javascript">
+
+        $(document).ready(function () {
+                var socket = io('http://localhost:5000/chat');
+                socket.on('connect', function () {
+                        socket.emit('client_create_room', { data: 'Connected!'});
+                });
+                socket.on('sys_room_msg', function (msg) {
+                        $('#msg_log').append('<p>System: ' + msg.data + '</p>')
+                });
+                $('form#to_emit').submit(function () {
+                        socket.emit('client_text', { data: $('#emit_data').val() });
+                        return false;
+                });
+                socket.on('my_room_response', function (msg) {
+                        $('#msg_log').append('<p>' + msg.current_user + ':' + msg.data + '</p>')
+                })
+        });
+
+</script>
+<h1>Flask-SocketIO Test</h1>
+<form id="to_emit" action='#' method="POST">
+        <input type="text" name="emit_data" id="emit_data" placeholder="Message">
+        <input type="submit" value="Send">
+</form>
+<div id="msg_log"></div>
+
+{% include "footer.html" %}
+{% endblock %}
