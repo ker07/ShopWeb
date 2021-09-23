@@ -18,18 +18,38 @@
                         socket.emit('client_text', { data: $('#emit_data').val() });
                         return false;
                 });
-                socket.on('my_room_response', function (msg) {
-                        $('#msg_log').append('<p>' + msg.current_user + ':' + msg.data + '</p>')
-                })
+                socket.on('text_msg', function (msg) {
+                        $('#msg_log').append('<p>' + msg.name + ':' + msg.data + '</p>')
+                });
+
+                $('form#send_room').submit(function () {
+                        socket.emit('room_0_to_room_msg', { room: $('#room_name').val(), data: $('#room_data').val() });
+                        return false;
+                });
+                socket.on('to_room_0_msg', function (msg) {
+                        $('#room_0_log').append('<p>' + msg.name + ' in ' + msg.room + ': ' + msg.data + '</p>')
+                });
+                socket.on('sys_to_room_0_msg', function (msg) {
+                        $('#room_0_log').append('<p>System: ' + msg.data + '</p>')
+                });
         });
 
 </script>
-<h1>Flask-SocketIO Test</h1>
+<h1>Chat Room for Client</h1>
 <form id="to_emit" action='#' method="POST">
         <input type="text" name="emit_data" id="emit_data" placeholder="Message">
         <input type="submit" value="Send">
 </form>
 <div id="msg_log"></div>
+
+<h1>Chat Room for Workers</h1>
+<form id="send_room" method="POST" action='#'>
+        <input type="text" name="room_name" id="room_name" placeholder="To Room">
+        <input type="text" name="room_data" id="room_data" placeholder="Message">
+        <input type="submit" value="Send to Room">
+</form>
+<div id="room_0_log"></div>
+
 
 {% include "footer.html" %}
 {% endblock %}

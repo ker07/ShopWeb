@@ -8,7 +8,6 @@ from model import app, db, CartItem, User, Item, worker_list
 from flask_migrate import Migrate
 from mail import send_password_reset_mail
 from chat import socketio
-import workerchat
 from dotenv import load_dotenv
 import os
 
@@ -25,9 +24,6 @@ MAIL_USE_TLS = 1
 MAIL_USERNAME = "Shoppp Test"
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 MAIL_ADDRESS = os.environ.get('MAIL_ADDRESS')
-
-print(MAIL_ADDRESS)
-print(MAIL_PASSWORD)
 
 # LOGIN MANAGER
 login_manager = LoginManager()
